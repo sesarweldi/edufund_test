@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:edufund_test/data/network/api_clinet.dart';
+import 'package:edufund_test/data/network/api_client.dart';
 import 'package:edufund_test/model/testimonial.dart';
 
 class Repository {
@@ -21,5 +21,3 @@ class Repository {
     }
   }
 }
-
-class AppConfig {}
