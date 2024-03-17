@@ -1,0 +1,18 @@
+{
+    "testimonials": "Testimonials",
+    "searchTestimonials" : "Search Testimonials",
+    "chngeLang" : "Change Language",
+    "readMore" : "Read More",
+    "readLess" : "Read Less",
+    "smthngWentWrong" : "Something Went Wrong",
+    "tryAgainLater" : "We so sorry about the error. Please try again later",
+    "notFoundSearch" : "We didn't found anything related with your query, please search with little accurate word",
+    "notFound" : "Not Found",
+    "letsSearch" : "Let's Search",
+    "initialSearch" : "Inspirational exploration and impressions on customer testimonials",
+    "indonesian" : "Indonesian",
+    "english" : "English",
+    "languageChanged" : "Language Changed",
+    "endedList" : "The list has ended"
+    
+}

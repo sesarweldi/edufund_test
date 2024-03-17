@@ -1,0 +1,17 @@
+{
+    "testimonials": "Testimonial",
+    "searchTestimonials" : "Cari Testimonial",
+    "chngeLang" : "Mengubah Bahasa",
+    "readMore" : "Baca Selengkapnya",
+    "readLess" : "Baca Lebih Sedikit",
+    "smthngWentWrong" : "Terdapat Kesalahan",
+    "tryAgainLater" : "Kami sangat menyesal atas kesalahan ini. Silakan coba lagi nanti",
+    "notFoundSearch" : "Kami tidak menemukan apa pun yang terkait dengan kueri Anda, silakan cari dengan kata yang sedikit akurat",
+    "notFound" : "Tidak Ditemukan",
+    "letsSearch" : "Ayo Cari",
+    "initialSearch" : "Eksplorasi dan kesan inspiratif pada testimoni pelanggan",
+    "indonesian" : "Indonesia",
+    "english" : "Inggris",
+    "languageChanged" : "Bahasa Telah Diubah",
+    "endedList" : "Daftar telah berakhir"
+}

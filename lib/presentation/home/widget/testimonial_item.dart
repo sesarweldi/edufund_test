@@ -1,5 +1,7 @@
 import 'package:animated_read_more_text/animated_read_more_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:edufund_test/config/locale/locale_keys.g.dart';
 import 'package:edufund_test/config/theme/app_colors.dart';
 import 'package:edufund_test/model/testimonial.dart';
 import 'package:edufund_test/presentation/widgets/misc_widgets.dart';
@@ -47,8 +49,8 @@ class TestimonialItem extends StatelessWidget {
           testimonial.content ?? "",
           animationCurve: Curves.easeInOut,
           maxLines: 4,
-          readMoreText: "Read More",
-          readLessText: "Read Less",
+          readMoreText: LocaleKeys.readMore.tr(),
+          readLessText: LocaleKeys.readLess.tr(),
           textStyle: TextStyle(
               fontSize: 16.sp,
               fontWeight: FontWeight.w400,
