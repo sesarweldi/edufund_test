@@ -1,67 +1,113 @@
+import 'package:animated_read_more_text/animated_read_more_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:edufund_test/config/theme/app_colors.dart';
+import 'package:edufund_test/model/testimonial.dart';
 import 'package:edufund_test/presentation/widgets/misc_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+
+const double _width = 150;
 
 class TestimonialItem extends StatelessWidget {
-  // final Testimonial testimonial;
+  final Testimonial testimonial;
+  final double? height;
+  final double width;
 
-  const TestimonialItem({super.key});
+  const TestimonialItem(
+      {super.key, required this.testimonial, this.height, this.width = _width});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16), color: AppColors.accent),
-        width: 320.w,
-        height: 320.w,
-        child: Padding(
-          child: _body(),
-          padding: EdgeInsets.all(8.w),
-        ),
-      ),
+    return Container(
+      padding: EdgeInsets.all(16),
+      margin: EdgeInsets.only(bottom: 12.h),
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(blurRadius: 8, color: Colors.grey.shade300),
+      ], borderRadius: BorderRadius.circular(16), color: AppColors.white),
+      width: width,
+      child: _body(),
     );
   }
 
   Widget _body() {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        AppSpacerH(8.h),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Image.asset(
+            "assets/images/icon_quote_start.png",
+            width: 20,
+            height: 20,
+          ),
+        ),
+        AppSpacerH(4.h),
+        AnimatedReadMoreText(
+          testimonial.content ?? "",
+          animationCurve: Curves.easeInOut,
+          maxLines: 4,
+          readMoreText: "Read More",
+          readLessText: "Read Less",
+          textStyle: TextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w400,
+              color: AppColors.black),
+          buttonTextStyle: TextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.bold,
+              color: AppColors.black),
+        ),
+        AppSpacerH(4.h),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Image.asset(
+            "assets/images/icon_quote_end.png",
+            width: 20,
+            height: 20,
+          ),
+        ),
+        AppSpacerH(16.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [_likeWidget(), _userWidget()],
+        ),
+      ],
+    );
+  }
+
+  Widget _likeWidget() {
+    return Row(
+      children: [
+        Icon(CupertinoIcons.heart_fill, color: AppColors.primary, size: 20),
+        AppSpacerW(4.w),
+        Text(testimonial.likes.toString(),
+            style: TextStyle(
+              fontSize: 12.sp,
+              color: AppColors.black,
+            )),
+      ],
+    );
+  }
+
+  Widget _userWidget() {
+    return Row(
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(16),
-          child: Image.asset(
-            "assets/images/test_image.png",
+          child: CachedNetworkImage(
+            imageUrl: testimonial.avatar ?? "",
             fit: BoxFit.cover,
-            width: 50.w,
-            height: 50.h,
+            width: 20.w,
+            height: 20.h,
           ),
         ),
-        Text(
-          "lorem ipsum",
-          style: TextStyle(
+        AppSpacerW(4.w),
+        Text(testimonial.name ?? "",
+            style: TextStyle(
+              fontSize: 12.sp,
               color: AppColors.black,
-              fontSize: 20.sp,
-              fontWeight: FontWeight.bold),
-        ),
-        AppSpacerH(16.h),
-        Image.asset(
-          "assets/images/quote.png",
-          width: 20,
-          height: 20,
-        ),
-        AppSpacerH(8.h),
-        Text(
-          "lorem ipsum ajsndkjasn dakjsdn jaksndakjs njasnd akjs kdnasjdnl mdas askjdn asjdn",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: AppColors.black,
-            fontSize: 16.sp,
-          ),
-        ),
+            )),
       ],
     );
   }

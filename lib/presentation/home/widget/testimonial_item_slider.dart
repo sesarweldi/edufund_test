@@ -44,7 +44,7 @@ class TestimonialItemSlider extends StatelessWidget {
           maxLines: 1,
           style: TextStyle(
               color: AppColors.black,
-              fontSize: 20.sp,
+              fontSize: 16.sp,
               fontWeight: FontWeight.bold),
         ),
         AppSpacerH(10.h),
@@ -62,7 +62,7 @@ class TestimonialItemSlider extends StatelessWidget {
             maxLines: 3,
             style: TextStyle(
               color: AppColors.black,
-              fontSize: 16.sp,
+              fontSize: 12.sp,
             ),
           ),
         ),
