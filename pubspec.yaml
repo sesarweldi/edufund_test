@@ -51,7 +51,6 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
-  shimmer: ^3.0.0
   sliver_tools: ^0.2.12
   animated_read_more_text: ^0.0.6
   modal_bottom_sheet: ^3.0.0
@@ -60,6 +59,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   auto_route_generator: ^7.3.2
+
+flutter_icons:
+  android: true
+  image_path: "assets/images/ic_launcher.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

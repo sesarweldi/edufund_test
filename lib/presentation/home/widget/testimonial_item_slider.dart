@@ -16,7 +16,7 @@ class TestimonialItemSlider extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(36),
-        color: AppColors.cream,
+        color: AppColors.white,
       ),
       width: double.infinity,
       padding: EdgeInsets.all(20),

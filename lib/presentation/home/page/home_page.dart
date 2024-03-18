@@ -3,21 +3,27 @@ import 'dart:ui';
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:edufund_test/config/locale/locale_keys.g.dart';
+import 'package:edufund_test/config/routes/app_router.dart';
 import 'package:edufund_test/config/theme/app_colors.dart';
 import 'package:edufund_test/model/testimonial.dart';
 import 'package:edufund_test/presentation/home/cubit/home_cubit.dart';
 import 'package:edufund_test/presentation/home/cubit/home_state.dart';
+import 'package:edufund_test/presentation/home/page/language_bottom_sheet.dart';
 import 'package:edufund_test/presentation/home/widget/testimonial_item.dart';
 import 'package:edufund_test/presentation/home/widget/testimonial_item_slider.dart';
 import 'package:edufund_test/presentation/widgets/delayed_display.dart';
 import 'package:edufund_test/presentation/widgets/empty_or_error_state.dart';
 import 'package:edufund_test/presentation/widgets/loading_widget.dart';
 import 'package:edufund_test/presentation/widgets/misc_widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:sliver_tools/sliver_tools.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 @RoutePage()
 class HomePage extends StatefulWidget implements AutoRouteWrapper {
@@ -56,21 +62,31 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: BlocListener<HomeCubit, HomeState>(
         listener: (context, state) {
-          if (state is TestimonialsLoaded) {
-            _onTestimonialsLoaded(state);
-          }
-
-          if (state is TestimonialsSliderLoaded) {
-            _onSliderTestimonialsLoaded(state);
-          }
+          _onBlocStateChange(state);
         },
         child: CustomScrollView(
           slivers: [
-            MultiSliver(children: [_body(), _testimonialsPagedList()])
+            MultiSliver(
+                children: [_body(), _textHeader(), _testimonialsPagedList()])
           ],
         ),
       ),
       backgroundColor: AppColors.background,
+    );
+  }
+
+  Widget _textHeader() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      child: Expanded(
+        child: Text(
+          LocaleKeys.seeMore.tr(),
+          style: TextStyle(
+              fontSize: 24.sp,
+              fontWeight: FontWeight.bold,
+              color: AppColors.black),
+        ),
+      ),
     );
   }
 
@@ -85,40 +101,6 @@ class _HomePageState extends State<HomePage> {
                   imageUrl: _testimonials[_current].avatar ?? "",
                   fit: BoxFit.cover,
                   height: MediaQuery.of(context).size.height * .58),
-              Positioned(
-                child: ClipRRect(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * .5,
-                      width: MediaQuery.of(context).size.width,
-                      color: Colors.grey.shade400.withOpacity(0.5),
-                      alignment: Alignment.topLeft,
-                      child: SafeArea(
-                        child: Container(
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                AppSpacerH(50.h),
-                                Text(
-                                  "Testimonials",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.black),
-                                ),
-                                const SizedBox()
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
               Positioned(
                 top: 0,
                 left: 0,
@@ -142,6 +124,60 @@ class _HomePageState extends State<HomePage> {
                         AppColors.background.withOpacity(0.0),
                         AppColors.background.withOpacity(0.0),
                       ])),
+                ),
+              ),
+              Positioned(
+                child: ClipRRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * .55,
+                      width: MediaQuery.of(context).size.width,
+                      color: Colors.grey.shade900.withOpacity(0.5),
+                      alignment: Alignment.topLeft,
+                      child: SafeArea(
+                        child: Container(
+                          margin: EdgeInsets.only(left: 16, right: 16, top: 30),
+                          padding: EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(16)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                LocaleKeys.testimonials,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.black),
+                              ).tr(),
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                      onTap: () {
+                                        _navigateToSearchPage();
+                                      },
+                                      child: Icon(
+                                        CupertinoIcons.search,
+                                        size: 28,
+                                      )),
+                                  AppSpacerW(10.w),
+                                  GestureDetector(
+                                    child: Icon(
+                                      Icons.language,
+                                      size: 28,
+                                    ),
+                                    onTap: () => _showBottomSheet(),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Positioned(
@@ -174,7 +210,7 @@ class _HomePageState extends State<HomePage> {
                     }).toList(),
                   ),
                 ),
-              )
+              ),
             ],
           );
         } else if (state is TestimonialsSliderLoading) {
@@ -230,8 +266,8 @@ class _HomePageState extends State<HomePage> {
 
   void _onTestimonialsLoaded(TestimonialsLoaded state) {
     final isLastPage = state.testimonials.length < 5;
-    const snackBar = SnackBar(
-      content: Text("The list has ended"),
+    final snackBar = SnackBar(
+      content: Text(LocaleKeys.endedList).tr(),
     );
     if (isLastPage) {
       _pagingController.appendLastPage(state.testimonials);
@@ -252,4 +288,31 @@ class _HomePageState extends State<HomePage> {
       current is TestimonialsSliderLoaded ||
       current is TestimonialsSliderLoading ||
       current is TestimonialsSliderError;
+
+  void _navigateToSearchPage() {
+    context.router.push(SearchRoute());
+  }
+
+  void _onBlocStateChange(HomeState state) {
+    if (state is TestimonialsLoaded) {
+      _onTestimonialsLoaded(state);
+    } else if (state is TestimonialsSliderLoaded) {
+      _onSliderTestimonialsLoaded(state);
+    } else if (state is TestimonialPagedError) {
+      _showSnackBar(state.error);
+    } else if (state is TestimonialsSliderError) {
+      _showSnackBar(state.error);
+    }
+  }
+
+  void _showBottomSheet() {
+    showBarModalBottomSheet(
+      expand: false,
+      backgroundColor: AppColors.white,
+      context: context,
+      builder: (context) {
+        return ChangeLanguageBottomSheet();
+      },
+    );
+  }
 }

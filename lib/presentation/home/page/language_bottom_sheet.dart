@@ -95,10 +95,10 @@ class LanguageCard extends StatelessWidget {
         padding: EdgeInsets.all(10.h),
         decoration: BoxDecoration(
           color:
-              isSelected ? AppColors.primary.withOpacity(0.1) : AppColors.white,
+              isSelected ? AppColors.accent.withOpacity(0.1) : AppColors.white,
           borderRadius: BorderRadius.circular(5.h),
           border: Border.all(
-            color: isSelected ? AppColors.primary : Colors.grey.shade300,
+            color: isSelected ? AppColors.accent : Colors.grey.shade300,
           ),
         ),
         child: Row(

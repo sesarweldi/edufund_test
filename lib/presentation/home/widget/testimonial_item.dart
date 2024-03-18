@@ -81,7 +81,7 @@ class TestimonialItem extends StatelessWidget {
   Widget _likeWidget() {
     return Row(
       children: [
-        Icon(CupertinoIcons.heart_fill, color: AppColors.primary, size: 20),
+        Icon(CupertinoIcons.heart_fill, color: AppColors.accent, size: 20),
         AppSpacerW(4.w),
         Text(testimonial.likes.toString(),
             style: TextStyle(
@@ -112,14 +112,5 @@ class TestimonialItem extends StatelessWidget {
             )),
       ],
     );
-  }
-}
-
-class TestimonialItemShimmer extends StatelessWidget {
-  const TestimonialItemShimmer({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }

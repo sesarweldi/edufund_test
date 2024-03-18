@@ -16,4 +16,5 @@ abstract class LocaleKeys {
   static const english = 'english';
   static const languageChanged = 'languageChanged';
   static const endedList = 'endedList';
+  static const seeMore = 'seeMore';
 }

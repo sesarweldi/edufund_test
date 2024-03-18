@@ -15,7 +15,24 @@ class Repository {
     try {
       Response response =
           await api.sendRequest.get("", queryParameters: queryParams);
-      return (response.data as List<dynamic>).map((item) => Testimonial.fromJson(item)).toList();
+      return (response.data as List<dynamic>)
+          .map((item) => Testimonial.fromJson(item))
+          .toList();
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  Future<List<Testimonial>> getTestimonialsSearch(String? search) async {
+    final Map<String, dynamic> queryParams = {};
+
+    queryParams['search'] = search;
+    try {
+      Response response =
+          await api.sendRequest.get("", queryParameters: queryParams);
+      return (response.data as List<dynamic>)
+          .map((item) => Testimonial.fromJson(item))
+          .toList();
     } catch (ex) {
       rethrow;
     }
